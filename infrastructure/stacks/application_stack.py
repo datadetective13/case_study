@@ -14,7 +14,7 @@ from constructs import Construct
 import os
 
 
-BEDROCK_LLM_MODEL = "meta.llama3-3-70b-instruct-v1:0"
+BEDROCK_LLM_MODEL = "us.meta.llama3-3-70b-instruct-v1:0"
 BEDROCK_EMBED_MODEL = "amazon.titan-embed-text-v2:0"
 OSS_INDEX_NAME = "aws-docs"
 
@@ -43,6 +43,7 @@ class ApplicationStack(Stack):
                     actions=["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"],
                     resources=[
                         f"arn:aws:bedrock:{self.region}::foundation-model/{BEDROCK_LLM_MODEL}",
+                        f"arn:aws:bedrock:{self.region}::{BEDROCK_LLM_MODEL}",  # inference profile ARN
                         f"arn:aws:bedrock:{self.region}::foundation-model/{BEDROCK_EMBED_MODEL}",
                     ],
                 ),
