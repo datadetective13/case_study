@@ -69,6 +69,7 @@ class ApplicationStack(Stack):
         backend_image = ecr_assets.DockerImageAsset(
             self, "BackendImage",
             directory=os.path.join(os.path.dirname(__file__), "../../backend"),
+            platform=ecr_assets.Platform.LINUX_AMD64,
         )
 
         backend_task_role = iam.Role(
@@ -111,6 +112,7 @@ class ApplicationStack(Stack):
         frontend_image = ecr_assets.DockerImageAsset(
             self, "FrontendImage",
             directory=os.path.join(os.path.dirname(__file__), "../../frontend"),
+            platform=ecr_assets.Platform.LINUX_AMD64,
         )
 
         frontend_service = ecs_patterns.ApplicationLoadBalancedFargateService(

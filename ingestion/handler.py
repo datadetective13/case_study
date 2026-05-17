@@ -67,6 +67,7 @@ def _get_vector_store(embeddings) -> OpenSearchVectorSearch:
         verify_certs=True,
         connection_class=RequestsHttpConnection,
         engine="faiss",
+        timeout=120,
     )
 
 
@@ -140,8 +141,8 @@ def lambda_handler(event, context):
             if link not in visited:
                 queue.append(link)
 
-        # Batch-index every 50 docs to avoid timeouts
-        if len(documents) >= 50:
+        # Batch-index every 10 docs to avoid bulk payload timeouts
+        if len(documents) >= 10:
             store.add_documents(documents)
             print(f"Indexed batch of {len(documents)} chunks")
             documents = []
